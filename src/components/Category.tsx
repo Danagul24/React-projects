@@ -17,18 +17,16 @@ function Category(props: IProps) {
     <div>
       <div className="d-flex justify-between">
         <h1>{props.category_name}</h1>
-        <p>View all</p>
+        <Link to="all">View all</Link>
       </div>
       <div className="d-flex flex-wrap">
-        {props.books.map((obj) => (
-          <Link to={"/details"}>
+        {props.books.slice(0, 5).map((obj) => (
             <Item
               name={obj.name}
               author={obj.author}
               price={obj.price}
               imgURL={obj.imgURL}
             />
-          </Link>
         ))}
       </div>
     </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./Item.module.scss";
+import { Link } from "react-router-dom";
 
 function Item(props) {
   const [isAdded, setIsAdded] = React.useState(false);
@@ -9,7 +10,10 @@ function Item(props) {
   };
   return (
     <div className={styles.card}>
-      <img width={117} height={190} src={props.imgURL} alt="Books" />
+      <Link to={"/details"}>
+        <img width={117} height={190} src={props.imgURL} alt="Books" />
+      </Link>
+      
       <div>
         <p>{props.name}</p>
         <span>{props.author}</span>

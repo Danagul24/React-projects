@@ -15,13 +15,10 @@ function ViewAll(){
             <div className="category">
             <div className="d-flex justify-between">
               <h1>Science fiction</h1>
-              
             </div>
           <div className="d-flex">
             {science.map((obj) => (
-              <Link to={"/details"}>
                 <Item name={obj.name} author={obj.autor} price={obj.price} imgURL={obj.imgURL} />
-              </Link>
             ))}
           </div>
         </div>
