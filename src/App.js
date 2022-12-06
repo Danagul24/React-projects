@@ -18,8 +18,8 @@ function App() {
         <Header onClickCart={() => setCartOpened(true)} />
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route exact path="/details" element={<Details />} />
-          <Route exact path="/all" element={<ViewAll />} />
+          <Route exact path="/:bookNameDetails" element={<Details />} />
+          <Route exact path="/:currentCategoryName" element={<ViewAll />} />
           <Route exact path="/purchases" element={<Purchases />} />
         </Routes>
       </Router>

@@ -10,10 +10,10 @@ function Item(props) {
   };
   return (
     <div className={styles.card}>
-      <Link to={"/details"}>
+      <Link to={props.name}>
         <img width={117} height={190} src={props.imgURL} alt="Books" />
       </Link>
-      
+
       <div>
         <p>{props.name}</p>
         <span>{props.author}</span>
