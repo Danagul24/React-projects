@@ -6,13 +6,28 @@ import Home from "./pages/Home";
 import ViewAll from "./pages/ViewAll";
 import Purchases from "./pages/Purchases";
 import Details from "./pages/Details";
+import axios from 'axios';
+// import { createGlobalState } from "react-hooks-global-state";
 
 function App() {
   const [cartOpened, setCartOpened] = React.useState(false);
+  const [cartItems, setCartItems] = React.useState([])
 
+  React.useEffect(() => {
+    axios.get('https://638d9a18aefc455fb2a66030.mockapi.io/Cart').then((res) => {
+      setCartItems(res.data)
+    })
+  }, [])
+
+  const onRemoveItem = (id) => {
+    axios.delete(`https://638d9a18aefc455fb2a66030.mockapi.io/Cart/${id}`);
+    setCartItems((prev) => prev.filter(item => item.id !== id));
+  }
+ 
   return (
+    
     <div className="wrapper clear">
-      {cartOpened && <Cart onClose={() => setCartOpened(false)} />}
+      {cartOpened && <Cart items={cartItems} onRemove={onRemoveItem} onClose={() => setCartOpened(false)} />}
 
       <Router>
         <Header onClickCart={() => setCartOpened(true)} />

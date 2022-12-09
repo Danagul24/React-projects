@@ -2,26 +2,28 @@ import React from "react";
 import styles from "./Item.module.scss";
 import { Link } from "react-router-dom";
 
-function Item(props) {
+function Item({id, name, imgURL, author, price, onPlus}) {
   const [isAdded, setIsAdded] = React.useState(false);
 
   const onClickPlus = () => {
+    onPlus({id, name, imgURL, price, author})
     setIsAdded(!isAdded);
   };
+  
   return (
     <div className={styles.card}>
-      <Link to={props.name}>
-        <img width={117} height={190} src={props.imgURL} alt="Books" />
+      <Link to={name}>
+        <img width={117} height={190} src={imgURL} alt="Books" />
       </Link>
 
       <div>
-        <p>{props.name}</p>
-        <span>{props.author}</span>
+        <p>{name}</p>
+        <span>{author}</span>
       </div>
       <div className="d-flex justify-between" style={{ marginTop: "20px" }}>
         <div className="d-flex flex-column">
           <span style={{ fontSize: "14px" }}>Цена: </span>
-          <b style={{ fontSize: "14px" }}>15.00$</b>
+          <b style={{ fontSize: "14px" }}>{price}</b>
         </div>
         <button onClick={onClickPlus}>
           <img
