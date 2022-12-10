@@ -10,10 +10,10 @@ Book shop is an online book buying platform. On the main page you can browse boo
 Requirements implemented:
 1. 4 pages: Home page, Details, View All, Purchases
 2. Components <Category>, <Item>, so on,
-4. States, API Requests (get, post, delete for items in the cart)
-5. Context System, Navigation(react router dom)
+3. States, API Requests (get, post, delete for items in the cart)
+4 Context System, Navigation(react router dom)
 
-6. Backend - Mock API - https://mockapi.io/clone/638d9a18aefc455fb2a66031
+Backend - Mock API - https://mockapi.io/clone/638d9a18aefc455fb2a66031
 
 Link to prototype:
 https://www.figma.com/file/3Ch0OAbRElrYaJ1vw87DyX/BookStore?node-id=0%3A1&t=UXALaJN7bePfZbSb-1
