@@ -11,7 +11,7 @@ Requirements implemented:
 1. 4 pages: Home page, Details, View All, Purchases
 2. Components Category, Item, etc,
 3. States, API Requests (get, post, delete for items in the cart)
-4 Context System, Navigation(react router dom)
+4. Context System, Navigation(react router dom)
 
 Backend - Mock API - https://mockapi.io/clone/638d9a18aefc455fb2a66031
 
