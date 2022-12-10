@@ -1,15 +1,15 @@
 import React from "react";
 import styles from "./Item.module.scss";
 import { Link } from "react-router-dom";
+import AppContext from "../../context";
 
-function Item({id, name, imgURL, author, price, onPlus}) {
-  const [isAdded, setIsAdded] = React.useState(false);
+function Item({ id, name, imgURL, author, price, onPlus, added = false }) {
+  const { isItemAdded } = React.useContext(AppContext);
 
   const onClickPlus = () => {
-    onPlus({id, name, imgURL, price, author})
-    setIsAdded(!isAdded);
+    onPlus({ id, name, imgURL, price, author });
   };
-  
+
   return (
     <div className={styles.card}>
       <Link to={name}>
@@ -23,14 +23,14 @@ function Item({id, name, imgURL, author, price, onPlus}) {
       <div className="d-flex justify-between" style={{ marginTop: "20px" }}>
         <div className="d-flex flex-column">
           <span style={{ fontSize: "14px" }}>Цена: </span>
-          <b style={{ fontSize: "14px" }}>{price}</b>
+          <b style={{ fontSize: "14px" }}>{price}$</b>
         </div>
         <button onClick={onClickPlus}>
           <img
             width={30}
             height={30}
-            src={isAdded ? "/img/tick.svg" : "/img/plus.svg"}
-            alt=""
+            src={isItemAdded(id) ? "/img/tick.svg" : "/img/plus.svg"}
+            alt="Plus"
           />
         </button>
       </div>
