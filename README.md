@@ -9,7 +9,7 @@ Book shop is an online book buying platform. On the main page you can browse boo
 
 Requirements implemented:
 1. 4 pages: Home page, Details, View All, Purchases
-2. Components <Category>, <Item>, so on,
+2. Components Category, Item, etc,
 3. States, API Requests (get, post, delete for items in the cart)
 4 Context System, Navigation(react router dom)
 
