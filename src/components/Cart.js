@@ -9,6 +9,7 @@ function Cart({ onClose, onRemove, items = [] }) {
   const { cartItems, setCartItems } = React.useContext(AppContext);
   const [orderId, setOrderId] = React.useState(null);
   const [isOrderCompleted, setIsOrderCompleted] = React.useState(false);
+  const totalPrice = cartItems.reduce((sum, obj) => obj.price + sum, 0);
 
   const onClickOrder = async () => {
     try {
@@ -69,7 +70,7 @@ function Cart({ onClose, onRemove, items = [] }) {
                       <p>{obj.name}</p>
                       <span>{obj.author}</span>
                     </div>
-                    <b>{obj.price}</b>
+                    <b>{obj.price}$</b>
                   </div>
                   <img
                     onClick={() => onRemove(obj.id)}
@@ -87,7 +88,7 @@ function Cart({ onClose, onRemove, items = [] }) {
                 <li>
                   <spna>Overall: </spna>
                   <div></div>
-                  <b>15.00$</b>
+                  <b>{totalPrice}$</b>
                 </li>
               </ul>
               <button onClick={onClickOrder}> CHECK OUT</button>

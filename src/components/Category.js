@@ -11,15 +11,7 @@ function Category(props) {
         {props.books.map((obj) => {
           if (obj.category_id === props.id) {
             return (
-              <Item
-                key={obj.id}
-                id={obj.id}
-                name={obj.name}
-                author={obj.author}
-                price={obj.price}
-                imgURL={obj.imgURL}
-                onPlus={(item) => onAddToCart(item)}
-              />
+              <Item key={obj.id} onPlus={(obj) => onAddToCart(obj)} {...obj} />
             );
           }
         })}

@@ -1,26 +1,13 @@
 import React from 'react';
 import {useParams} from 'react-router-dom';
 
-function Details() {
+function Details(props) {
     let {bookNameDetails} = useParams();
-    const [books, setBooks] = React.useState([]);
-
-    React.useEffect(() => {
-        fetch("https://638d9a18aefc455fb2a66030.mockapi.io/books")
-          .then((res) => {
-            return res.json();
-          })
-          .then((json) => {
-            console.log(json);
-            setBooks(json);
-          });
-      }, []);
-
 
     return(
         <div className="d-flex justify-center">
            
-            {books.map((obj)=>{
+            {props.books.map((obj)=>{
                 if (obj.name==bookNameDetails)
                 return(
                     <div>

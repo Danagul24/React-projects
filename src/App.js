@@ -4,8 +4,8 @@ import Header from "./components/Header";
 import Cart from "./components/Cart";
 import Home from "./pages/Home";
 import ViewAll from "./pages/ViewAll";
-import Purchases from "./pages/Purchases";
 import Details from "./pages/Details";
+import Orders from "./pages/Orders";
 import axios from "axios";
 import AppContext from "./context";
 
@@ -16,27 +16,22 @@ function App() {
   const [books, setBooks] = React.useState([]);
 
   React.useEffect(() => {
-    axios
-      .get(`https://638d9a18aefc455fb2a66030.mockapi.io/Cart`)
-      .then((res) => {
-        setCartItems(res.data);
-      });
-  }, []);
+    async function fetchData() {
+      const cartResponse = await axios.get(
+        "https://638d9a18aefc455fb2a66030.mockapi.io/Cart"
+      );
+      const categoriesResponse = await axios.get(
+        "https://638d9a18aefc455fb2a66030.mockapi.io/categories1"
+      );
+      const booksResponse = await axios.get(
+        "https://638d9a18aefc455fb2a66030.mockapi.io/books"
+      );
 
-  React.useEffect(() => {
-    axios
-      .get("https://638d9a18aefc455fb2a66030.mockapi.io/categories1")
-      .then((res) => {
-        setCategories(res.data);
-      });
-  }, []);
-
-  React.useEffect(() => {
-    axios
-      .get("https://638d9a18aefc455fb2a66030.mockapi.io/books")
-      .then((res) => {
-        setBooks(res.data);
-      });
+      setCartItems(cartResponse.data);
+      setCategories(categoriesResponse.data);
+      setBooks(booksResponse.data);
+    }
+    fetchData();
   }, []);
 
   const onAddToCart = (obj) => {
@@ -45,14 +40,20 @@ function App() {
         prev.filter((item) => Number(item.id) !== Number(obj.id))
       );
     } else {
-      axios.post(`https://638d9a18aefc455fb2a66030.mockapi.io/Cart/`, obj);
+      axios.post(`https://638d9a18aefc455fb2a66030.mockapi.io/Cart`, obj);
       setCartItems((prev) => [...prev, obj]);
     }
   };
 
   const onRemoveItem = (id) => {
-    axios.delete(`https://638d9a18aefc455fb2a66030.mockapi.io/Cart/${id}`);
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
+    try {
+      axios.delete(`https://638d9a18aefc455fb2a66030.mockapi.io/Cart/${id}`);
+      setCartItems((prev) =>
+        prev.filter((item) => Number(item.id) !== Number(id))
+      );
+    } catch (error) {
+      alert("Error when deleteting from cart");
+    }
   };
 
   const isItemAdded = (id) => {
@@ -65,8 +66,6 @@ function App() {
         cartItems,
         isItemAdded,
         onAddToCart,
-        categories,
-        books,
         setCartOpened,
         setCartItems,
       }}
@@ -83,10 +82,22 @@ function App() {
         <Router>
           <Header onClickCart={() => setCartOpened(true)} />
           <Routes>
-            <Route exact path="/" element={<Home />} />
-            <Route exact path="/:bookNameDetails" element={<Details />} />
-            <Route exact path="/:currentCategoryName" element={<ViewAll />} />
-            <Route exact path="/purchases" element={<Purchases />} />
+            <Route
+              exact
+              path="/"
+              element={<Home categories={categories} books={books} />}
+            />
+            <Route
+              exact
+              path="/:bookNameDetails"
+              element={<Details books={books} />}
+            />
+            <Route
+              exact
+              path="/:currenCategoryId"
+              element={<ViewAll books={books} />}
+            />
+            <Route exact path="/orders" element={<Orders />} />
           </Routes>
         </Router>
       </div>

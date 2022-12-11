@@ -1,34 +1,28 @@
 import React from 'react';
 import {useParams} from 'react-router-dom';
 import Category from '../components/Category.js';
-import AppContext from '../context.js';
 
-function ViewAll(){
-  let {currentCategoryName} = useParams();
-
-  const { categories } = React.useContext(AppContext);
-  const { books } = React.useContext(AppContext);
-
+function ViewAll(props){
+  let {currentCategory} = useParams();
     return (
         <div className="content p-40">
              <div className="category">
-                {categories.map((category) => {
-                  books.map((obj)=>{
-                    if (obj.category == currentCategoryName){
+                  {props.books.map((obj, index)=>{
+                    if (obj.category == currentCategory){
                       return (
                       <div>
                         <div className="d-flex justify-between">
                           <h1>{obj.category}</h1>
                         </div>
-                        <Category key = {category.id}
-                          id={category.id}
-                          books={books}
+                        <Category key = {index}
+                          id={obj.Category}
+                          books={props.books}
                           />
                       </div>
                       )
                     }
                   })
-                })}           
+                }      
             </div>
       </div>
         

@@ -25,13 +25,15 @@ function Item({ id, name, imgURL, author, price, onPlus, added = false }) {
           <span style={{ fontSize: "14px" }}>Цена: </span>
           <b style={{ fontSize: "14px" }}>{price}$</b>
         </div>
-        <button onClick={onClickPlus}>
-          <img
-            width={30}
-            height={30}
-            src={isItemAdded(id) ? "/img/tick.svg" : "/img/plus.svg"}
-            alt="Plus"
-          />
+        <button classname="plus" onClick={onClickPlus}>
+          {onPlus && (
+            <img
+              width={30}
+              height={30}
+              src={isItemAdded(id) ? "/img/tick.svg" : "/img/plus.svg"}
+              alt="Plus"
+            />
+          )}
         </button>
       </div>
     </div>
