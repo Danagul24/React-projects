@@ -3,7 +3,7 @@ import Item from "./Item";
 import AppContext from "../context";
 
 function Category(props) {
-  const { onAddToCart } = React.useContext(AppContext);
+  const { onAddToCart, onAddToFavourite } = React.useContext(AppContext);
 
   return (
     <div>
@@ -11,7 +11,12 @@ function Category(props) {
         {props.books.map((obj) => {
           if (obj.category_id === props.id) {
             return (
-              <Item key={obj.id} onPlus={(obj) => onAddToCart(obj)} {...obj} />
+              <Item
+                key={obj.id}
+                onPlus={(obj) => onAddToCart(obj)}
+                onFavourite={(obj) => onAddToFavourite(obj)}
+                {...obj}
+              />
             );
           }
         })}

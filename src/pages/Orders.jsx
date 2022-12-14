@@ -2,12 +2,9 @@ import {Link} from 'react-router-dom';
 import Item from '../components/Item';
 import axios from 'axios';
 import React from 'react';
-import AppContext from '../context';
-
 
 function Orders(){
   const [ orders, setOrders ] = React.useState([]);
-  const { onAddToCart } = React.useContext(AppContext);
 
   React.useEffect(() => {
     (async ()=> {
@@ -30,11 +27,7 @@ function Orders(){
               <Link to={"/details"}>
                 <Item 
                key={obj.id}
-               id={obj.id}
-               name={obj.name}
-               author={obj.author}
-               price={obj.price}
-               imgURL={obj.imgURL}
+               {...obj}
                />
               </Link>
             ))}

@@ -2,8 +2,13 @@ import { Link } from "react-router-dom";
 import React from "react";
 import AppContext from "../context";
 function Header(props) {
+  const { searchValue, setSearchValue } = React.useContext(AppContext);
   const { cartItems } = React.useContext(AppContext);
   const totalPrice = cartItems.reduce((sum, obj) => obj.price + sum, 0);
+
+  const onChangeSearchInput = (event) => {
+    setSearchValue(event.target.value);
+  };
 
   return (
     <header className="d-flex justify-between align-center p-40">
@@ -18,12 +23,34 @@ function Header(props) {
       </Link>
       <div className="search-block d-flex">
         <img width={18} height={18} src="/img/search.png" alt="Search" />
-        <input placeholder="Search..."></input>
+        {searchValue && (
+          <img
+            onClick={() => setSearchValue("")}
+            className="clear"
+            src="/img/close.png"
+            alt="Clear"
+          />
+        )}
+        <input
+          onChange={onChangeSearchInput}
+          value={searchValue}
+          placeholder="Search..."
+        ></input>
       </div>
       <ul className="d-flex">
         <li onClick={props.onClickCart} className="cart mr-30">
-          <img width={18} height={18} src="/img/cart.svg" />
+          <img width={24} height={18} src="/img/cart.svg" />
           <span>{totalPrice}$</span>
+        </li>
+        <li>
+          <Link to="/favourites">
+            <img
+              width={18}
+              height={22}
+              className="mr-20"
+              src="/img/favourites.svg"
+            />
+          </Link>
         </li>
         <li>
           <Link to="/orders">

@@ -3,11 +3,26 @@ import styles from "./Item.module.scss";
 import { Link } from "react-router-dom";
 import AppContext from "../../context";
 
-function Item({ id, name, imgURL, author, price, onPlus, added = false }) {
+function Item({
+  id,
+  name,
+  imgURL,
+  author,
+  price,
+  onPlus,
+  onFavourite,
+  favourited = false,
+}) {
   const { isItemAdded } = React.useContext(AppContext);
+  const [isFavourite, setIsFavourite] = React.useState(favourited);
 
   const onClickPlus = () => {
     onPlus({ id, name, imgURL, price, author });
+  };
+
+  const onClickFavourite = () => {
+    onFavourite({ id, name, imgURL, price, author });
+    setIsFavourite(!isFavourite);
   };
 
   return (
@@ -25,16 +40,22 @@ function Item({ id, name, imgURL, author, price, onPlus, added = false }) {
           <span style={{ fontSize: "14px" }}>Цена: </span>
           <b style={{ fontSize: "14px" }}>{price}$</b>
         </div>
-        <button classname="plus" onClick={onClickPlus}>
-          {onPlus && (
-            <img
-              width={30}
-              height={30}
-              src={isItemAdded(id) ? "/img/tick.svg" : "/img/plus.svg"}
-              alt="Plus"
-            />
-          )}
-        </button>
+        <img
+          onClick={onClickFavourite}
+          width={30}
+          height={30}
+          src={isFavourite ? "/img/liked.svg" : "/img/unliked.svg"}
+          alt="Like"
+        />
+        {onPlus && (
+          <img
+            onClick={onClickPlus}
+            width={30}
+            height={30}
+            src={isItemAdded(id) ? "/img/tick.svg" : "/img/plus.svg"}
+            alt="Plus"
+          />
+        )}
       </div>
     </div>
   );

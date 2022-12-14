@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Cart from "./components/Cart";
 import Home from "./pages/Home";
-import ViewAll from "./pages/ViewAll";
 import Details from "./pages/Details";
 import Orders from "./pages/Orders";
+import Favourites from "./pages/Favourites";
 import axios from "axios";
 import AppContext from "./context";
 
@@ -14,6 +14,8 @@ function App() {
   const [cartItems, setCartItems] = React.useState([]);
   const [categories, setCategories] = React.useState([]);
   const [books, setBooks] = React.useState([]);
+  const [searchValue, setSearchValue] = React.useState("");
+  const [favourites, setFavourites] = React.useState([]);
 
   React.useEffect(() => {
     async function fetchData() {
@@ -32,6 +34,14 @@ function App() {
       setBooks(booksResponse.data);
     }
     fetchData();
+  }, []);
+
+  React.useEffect(() => {
+    axios
+      .get("https://6399b1d129930e2bb3dbe751.mockapi.io/favourites")
+      .then((res) => {
+        setFavourites(res.data);
+      });
   }, []);
 
   const onAddToCart = (obj) => {
@@ -60,6 +70,24 @@ function App() {
     return cartItems.some((obj) => Number(obj.id) === Number(id));
   };
 
+  const onAddToFavourite = async (obj) => {
+    try {
+      if (favourites.find((favObj) => favObj.id === obj.id)) {
+        axios.delete(
+          `https://6399b1d129930e2bb3dbe751.mockapi.io/favourites/${obj.id}`
+        );
+      } else {
+        const { data } = await axios.post(
+          "https://6399b1d129930e2bb3dbe751.mockapi.io/favourites",
+          obj
+        );
+        setFavourites((prev) => [...prev, data]);
+      }
+    } catch (error) {
+      alert("Adding to favourites failed");
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -68,6 +96,9 @@ function App() {
         onAddToCart,
         setCartOpened,
         setCartItems,
+        searchValue,
+        setSearchValue,
+        onAddToFavourite,
       }}
     >
       <div className="wrapper clear">
@@ -85,19 +116,30 @@ function App() {
             <Route
               exact
               path="/"
-              element={<Home categories={categories} books={books} />}
+              element={
+                <Home
+                  categories={categories}
+                  books={books}
+                  searchValue={searchValue}
+                />
+              }
             />
             <Route
               exact
               path="/:bookNameDetails"
               element={<Details books={books} />}
             />
+            <Route exact path="/orders" element={<Orders />} />
             <Route
               exact
-              path="/:currenCategoryId"
-              element={<ViewAll books={books} />}
+              path="/favourites"
+              element={
+                <Favourites
+                  items={favourites}
+                  onAddToFavourite={onAddToFavourite}
+                />
+              }
             />
-            <Route exact path="/orders" element={<Orders />} />
           </Routes>
         </Router>
       </div>
