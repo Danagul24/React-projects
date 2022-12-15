@@ -40,13 +40,15 @@ function Item({
           <span style={{ fontSize: "14px" }}>Цена: </span>
           <b style={{ fontSize: "14px" }}>{price}$</b>
         </div>
-        <img
-          onClick={onClickFavourite}
-          width={30}
-          height={30}
-          src={isFavourite ? "/img/liked.svg" : "/img/unliked.svg"}
-          alt="Like"
-        />
+        {onFavourite && (
+          <img
+            onClick={onClickFavourite}
+            width={30}
+            height={30}
+            src={isFavourite ? "/img/liked.svg" : "/img/unliked.svg"}
+            alt="Like"
+          />
+        )}
         {onPlus && (
           <img
             onClick={onClickPlus}

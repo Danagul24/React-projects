@@ -28,20 +28,16 @@ function App() {
       const booksResponse = await axios.get(
         "https://638d9a18aefc455fb2a66030.mockapi.io/books"
       );
+      const favouritesResponse = await axios.get(
+        "https://6399b1d129930e2bb3dbe751.mockapi.io/favourites"
+      );
 
       setCartItems(cartResponse.data);
       setCategories(categoriesResponse.data);
       setBooks(booksResponse.data);
+      setFavourites(favouritesResponse.data);
     }
     fetchData();
-  }, []);
-
-  React.useEffect(() => {
-    axios
-      .get("https://6399b1d129930e2bb3dbe751.mockapi.io/favourites")
-      .then((res) => {
-        setFavourites(res.data);
-      });
   }, []);
 
   const onAddToCart = (obj) => {
@@ -72,9 +68,12 @@ function App() {
 
   const onAddToFavourite = async (obj) => {
     try {
-      if (favourites.find((favObj) => favObj.id === obj.id)) {
+      if (favourites.find((favObj) => Number(favObj.id) === Number(obj.id))) {
         axios.delete(
           `https://6399b1d129930e2bb3dbe751.mockapi.io/favourites/${obj.id}`
+        );
+        setFavourites((prev) =>
+          prev.filter((item) => Number(item.id) !== Number(obj.id))
         );
       } else {
         const { data } = await axios.post(
@@ -99,6 +98,7 @@ function App() {
         searchValue,
         setSearchValue,
         onAddToFavourite,
+        favourites,
       }}
     >
       <div className="wrapper clear">
@@ -130,16 +130,7 @@ function App() {
               element={<Details books={books} />}
             />
             <Route exact path="/orders" element={<Orders />} />
-            <Route
-              exact
-              path="/favourites"
-              element={
-                <Favourites
-                  items={favourites}
-                  onAddToFavourite={onAddToFavourite}
-                />
-              }
-            />
+            <Route exact path="/favourites" element={<Favourites />} />
           </Routes>
         </Router>
       </div>
