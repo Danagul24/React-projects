@@ -1,8 +1,7 @@
 Team members:
 
-Sailau Danagul
-
-Moldamyrza Amina
+Link to website:
+https://ambient-cubist-372510.uc.r.appspot.com/
 
 Project description: 
 Book shop is an online book buying platform. On the main page you can browse books that are divided into categories such as fiction, world literature, detective, etc. You can also view in more detail the description, author and price of the book. You can also add items to your cart and send a purchase request, since we are planning to connect the site with a backend and in response to your request you can get an answer in the form of a successful order or in case of an error. When the operation is successful you can view the history of your purchases. Also you can add books to favourites and view them in separate page.
