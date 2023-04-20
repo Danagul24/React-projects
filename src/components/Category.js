@@ -8,6 +8,7 @@ function Category(props) {
   return (
     <div>
       <div className="d-flex flex-wrap">
+          {/* eslint-disable-next-line array-callback-return */}
         {props.books.map((obj) => {
           if (obj.category_id === props.id) {
             return (
